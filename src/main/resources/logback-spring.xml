@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--onMatch="ACCEPT" 表示匹配该级别及以上-->
+<!--onMatch="DENY" 表示不匹配该级别及以上-->
+<!--onMatch="NEUTRAL" 表示该级别及以上的，由下一个filter处理，如果当前是最后一个，则表示匹配该级别及以上-->
+<!--onMismatch="ACCEPT" 表示匹配该级别以下-->
+<!--onMismatch="NEUTRAL" 表示该级别及以下的，由下一个filter处理，如果当前是最后一个，则不匹配该级别以下的-->
+<!--onMismatch="DENY" 表示不匹配该级别以下的-->
+<!-- ThresholdFilter临界值过滤器 -->
+<!-- LevelFilter级别过滤器 -->
+<!-- ConsoleAppender控制台日志输出类 -->
+<!-- RollingFileAppender文件日志输出类 -->
+<!-- TimeBasedRollingPolicy时间滚动策略 -->
+
+<configuration >
+    <!--定义控制台输出-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--输出格式-->
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!--定义日志文件输出-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </encoder>
+        <!--日志滚动存储策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>/users/toudaizhi/log/wxsell/info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <!--定义错误日志文件输出-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--添加过滤，只输出error-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </encoder>
+        <!--日志滚动存储策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>/users/toudaizhi/log/wxsell/error.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+    <!--配置输出范围-->
+    <root level="info">
+        <appender-ref ref="consoleLog" />
+        <appender-ref ref="fileInfoLog" />
+        <appender-ref ref="fileErrorLog" />
+    </root>
+</configuration>

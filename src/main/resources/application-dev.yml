@@ -1,0 +1,66 @@
+###logback日志配置
+#logging:
+#配置输出格式
+#pattern:
+#  console: "%d - %msg%n"
+#配置日志路径，最后也可设置日志文件名称
+#path: /users/toudaizhi/log/wxsell/
+#配置日志级别,可直接跟级别debug，info，error，也可指定某个类，级别
+# level:
+#  com.bob.wx_sell: debug
+
+###配置数据库
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password:
+    url: jdbc:mysql://172.16.1.219:3306/wx_sell?characterEncoding=utf8&useSSL=false
+    #url: jdbc:mysql://47.97.190.0:3306/wx_sell?characterEncoding=utf8&useSSL=false
+  ###全局处理，去除对象中为null的返回值
+  jackson:
+    default-property-inclusion: non_null
+  jpa:
+    show-sql: true
+
+
+wechat:
+  #设置微信appid和secret
+  #公众账号，授权
+  mpAppId: wx20dd97f0730cc4d9
+  mpAppSecret: d0db0d9f2550234a6ee3268e9c6bfb49
+  #支付／商户号
+  mchId:
+  mchKey:
+  #发起支付不需要证书，退款需要
+  keyPath:
+  sslContext:
+  notifyUrl:
+  reUrl:
+  #开放平台，卖家扫码登录用
+  openAppId:
+  openAppSecret:
+  #推送消息模版ID
+  templateId:
+    orderStatus: XFUsRA05_J-8TulNxb3nldRjDuzropbCXj5sqkc_mZs
+#server:
+#  servlet:
+#    context-path: /sell
+projecturl:
+  wechatMpAuthorize: http://fej4r9.natappfree.cc
+  wechatOpenAuthorize: http://fej4r9.natappfree.cc
+  sell: http://fej4r9.natappfree.cc
+
+#mybatis SQL打印
+logging:
+  level:
+    com.bob.wx_sell.dataobject.mapper: trace
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+# 又拍云服务 见 https://console.upyun.com/services/file/
+upyun:
+  bucketName: XXX
+  userName: xxx
+  password: xxxx
+  imageHost: http://xxx.com/
